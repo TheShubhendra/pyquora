@@ -1,3 +1,6 @@
+import json
+
+
 class Profile:
     def __init__(self, user, data):
         self.user = user
@@ -14,6 +17,16 @@ class Profile:
             self.profileCrendential = data["profileCredential"]["experience"]
         except:
             pass
+        try:
+            text = ""
+            description = json.loads(data["description"])
+            for section in description["sections"]:
+                for span in section["spans"]:
+                    text += span["text"]
+                text += "\n"
+            self.profileBio = text
+        except:
+            self.profileBio = "Not Available"
         self.contributingSpaceCount = data["numCanContributeTribes"]
         self.twitterProfileUrl = data["twitterProfileUrl"]
         self.answerViewsCount = data["allTimePublicAnswerViews"]
