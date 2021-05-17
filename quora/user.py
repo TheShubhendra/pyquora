@@ -22,7 +22,7 @@ class User:
         async with self._session.get(self.profileUrl) as response:
             return await response.text()
 
-    async def _parse_page(self, html_data):
+    def _parse_page(self, html_data):
         try:
             data = re.findall(
                 r'window\.ansFrontendGlobals\.data\.inlineQueryResults\.results\[".*?"\] = ("{.*}");',
@@ -35,5 +35,5 @@ class User:
 
     async def profile(self):
         html_data = await self._fetch_profile_html()
-        json_data = await self._parse_page(html_data)
+        json_data = self._parse_page(html_data)
         return Profile(self, json_data)
