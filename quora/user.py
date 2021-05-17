@@ -5,7 +5,10 @@ import aiohttp
 
 from .profile import Profile
 from .exceptions import ProfileNotFoundError
-
+from ._parsers import (
+        parse_page,
+        parse_answers,
+        )
 
 class User:
     def __init__(self, username, session=None):
@@ -16,24 +19,22 @@ class User:
     async def _create_session(self) -> None:
         self._session = aiohttp.ClientSession()
 
-    async def _fetch_profile_html(self) -> str:
+    async def _request(self, url) -> str:
         if self._session is None:
             await self._create_session()
-        async with self._session.get(self.profileUrl) as response:
+        async with self._session.get(url) as response:
             return await response.text()
 
-    def _parse_page(self, html_data):
-        try:
-            data = re.findall(
-                r'window\.ansFrontendGlobals\.data\.inlineQueryResults\.results\[".*?"\] = ("{.*}");',
-                html_data,
-            )[-1]
-            data = json.loads(json.loads(data))
-        except Exception:
-            raise ProfileNotFoundError("No profile found with this username.")
-        return data["data"]["user"]
-
     async def profile(self):
-        html_data = await self._fetch_profile_html()
-        json_data = self._parse_page(html_data)
+        html_data = await self._request(self.profileUrl)
+        json_data = parse_page(html_data)
         return Profile(self, json_data)
+
+    async def answers (self):
+        html_data = await self._request(self.profileUrl+"/answers")
+        json_data = parse_page(html_data)
+        answers = parse_answers(json_data)
+        return answers
+    def __del__(self):
+        loop = asyncio.new_event_loop()
+        loop.run_until_complete(self._session.close())
