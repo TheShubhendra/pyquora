@@ -7,7 +7,7 @@ class Question:
     def __init__(self, data_dict):
         self.id = data_dict.get("id")
         self.qid = data_dict.get("qid")
-        self.url = "https://www.quora.com"+data_dict.get("url")
+        self.url = "https://www.quora.com" + data_dict.get("url")
         self.title = Content(data_dict.get("title"))
 
     def __str__(self):

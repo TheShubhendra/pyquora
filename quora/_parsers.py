@@ -17,6 +17,5 @@ def parse_page(html_data):
 
 
 def parse_answers(json_data):
-    answers = json_data['recentPublicAndPinnedAnswersConnection']['edges']
-    return [Answer(ans['node']) for ans in answers]
- 
+    answers = json_data["recentPublicAndPinnedAnswersConnection"]["edges"]
+    return [Answer(ans["node"]) for ans in answers]

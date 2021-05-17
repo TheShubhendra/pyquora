@@ -6,9 +6,10 @@ import aiohttp
 from .profile import Profile
 from .exceptions import ProfileNotFoundError
 from ._parsers import (
-        parse_page,
-        parse_answers,
-        )
+    parse_page,
+    parse_answers,
+)
+
 
 class User:
     def __init__(self, username, session=None):
@@ -30,11 +31,12 @@ class User:
         json_data = parse_page(html_data)
         return Profile(self, json_data)
 
-    async def answers (self):
-        html_data = await self._request(self.profileUrl+"/answers")
+    async def answers(self):
+        html_data = await self._request(self.profileUrl + "/answers")
         json_data = parse_page(html_data)
         answers = parse_answers(json_data)
         return answers
+
     def __del__(self):
         loop = asyncio.new_event_loop()
         loop.run_until_complete(self._session.close())
