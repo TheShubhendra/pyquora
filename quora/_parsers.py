@@ -2,6 +2,7 @@ import json
 import re
 
 from quora.answer import Answer
+from .exceptions import ProfileNotFoundError
 
 
 def parse_page(html_data):

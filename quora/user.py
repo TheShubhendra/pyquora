@@ -4,7 +4,6 @@ import asyncio
 import aiohttp
 
 from .profile import Profile
-from .exceptions import ProfileNotFoundError
 from ._parsers import (
     parse_page,
     parse_answers,
