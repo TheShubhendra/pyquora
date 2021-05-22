@@ -36,6 +36,3 @@ class User:
         answers = parse_answers(json_data)
         return answers
 
-    def __del__(self):
-        loop = asyncio.new_event_loop()
-        loop.run_until_complete(self._session.close())
