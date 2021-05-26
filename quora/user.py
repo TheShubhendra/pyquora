@@ -36,3 +36,5 @@ class User:
         answers = parse_answers(json_data)
         return answers
 
+    def __eq__(self, other):
+        return self.username == other.username

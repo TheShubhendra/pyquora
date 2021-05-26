@@ -17,3 +17,6 @@ class Answer:
 
     def __str__(self):
         return self.content.__str__()
+
+    def __eq__(self, other):
+        return self.aid == other.aid

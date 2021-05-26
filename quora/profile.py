@@ -46,3 +46,6 @@ class Profile:
         for i, j in vars(self).items():
             text += i + ": " + str(j) + "\n"
         return text
+
+    def __eq__(self, other):
+        return self.uid == other.uid

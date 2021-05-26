@@ -12,3 +12,6 @@ class Question:
 
     def __str__(self):
         return self.title.__str__()
+
+    def __eq__(self, other):
+        return self.qid == other.qid
