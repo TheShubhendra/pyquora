@@ -48,4 +48,5 @@ class Profile:
         return text
 
     def __eq__(self, other):
-        return self.uid == other.uid
+        return vars(self) == vars(other
+        )
