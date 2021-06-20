@@ -1,8 +1,12 @@
+"""Contains Profile class."""
 import json
 
 
 class Profile:
+    """Represent the profile of a quora user."""
+
     def __init__(self, user, data):
+        """Constructor for Profile."""
         self.user = user
         self.username = user.username
         self.id = data["id"]
@@ -48,5 +52,4 @@ class Profile:
         return text
 
     def __eq__(self, other):
-        return vars(self) == vars(other
-        )
+        return vars(self) == vars(other)

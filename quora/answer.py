@@ -5,6 +5,7 @@ from quora.question import Question
 
 class Answer:
     def __init__(self, data_dict):
+        """Constructs the `Answer` object."""
         self.id = data_dict.get("id")
         self.aid = data_dict.get("aid")
         self.isPinned = data_dict.get("isPinned")
@@ -16,7 +17,9 @@ class Answer:
         self.author = data_dict.get("author")
 
     def __str__(self):
+        """Returns the answer text."""
         return self.content.__str__()
 
     def __eq__(self, other):
+        """Returns whether two answers are same or not."""
         return self.aid == other.aid

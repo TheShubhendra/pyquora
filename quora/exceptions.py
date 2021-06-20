@@ -1,3 +1,6 @@
+"""Exception module for library."""
+
+
 class PyQuoraException(Exception):
     """Base class for exceptions."""
 

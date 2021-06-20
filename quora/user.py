@@ -11,12 +11,15 @@ from ._parsers import (
 
 
 class User:
+    """Represents a Quora user."""
+
     def __init__(self, username, session=None):
         self.username = username
         self.profileUrl = f"https://www.quora.com/profile/{username}"
         self._session = session
 
     async def _create_session(self) -> None:
+        """Creates a aiohttp client session."""
         self._session = aiohttp.ClientSession()
 
     async def _request(self, url) -> str:
@@ -26,11 +29,13 @@ class User:
             return await response.text()
 
     async def profile(self):
+        """Fetch profile of the user."""
         html_data = await self._request(self.profileUrl)
         json_data = parse_page(html_data)
         return Profile(self, json_data)
 
     async def answers(self):
+        """Fetch answers of the User."""
         html_data = await self._request(self.profileUrl + "/answers")
         json_data = parse_page(html_data)
         answers = parse_answers(json_data)
