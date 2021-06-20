@@ -10,11 +10,20 @@ Welcome to pyquora's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+Installation
+------------
+``pip install pyquora``
+
+References
+-----------
+Below you can find a reference of all the classes and methods in quora package.
+
+.. toctree ::
+   user
 
 
 Indices and tables
 ==================
-
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
