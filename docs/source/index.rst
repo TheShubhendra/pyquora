@@ -19,7 +19,7 @@ References
 Below you can find a reference of all the classes and methods in quora package.
 
 .. toctree ::
-   user
+   quora
 
 
 Indices and tables
