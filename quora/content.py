@@ -2,7 +2,8 @@ import json
 
 
 class Content:
-    """Represent the text content inside of Question , Answer and other objects."""
+    """Represent the text content/
+    inside of Question , Answer and other objects."""
 
     def __init__(self, data_dict):
         """Construts Content."""

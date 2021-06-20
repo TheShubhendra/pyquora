@@ -1,4 +1,5 @@
+"""Init module."""
 from .user import User
 from .exceptions import ProfileNotFoundError
 
-__all__ = [User]
+__all__ = ["User", "ProfileNotFoundError"]

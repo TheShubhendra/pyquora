@@ -15,11 +15,11 @@ class Profile:
         try:
             self.firstName = data["names"][0]["givenName"]
             self.lastName = data["names"][0]["familyName"]
-        except:
+        except Exception:
             pass
         try:
             self.profileCrendential = data["profileCredential"]["experience"]
-        except:
+        except Exception:
             pass
         try:
             text = ""
@@ -29,7 +29,7 @@ class Profile:
                     text += span["text"]
                 text += "\n"
             self.profileBio = text
-        except:
+        except Exception:
             self.profileBio = "Not Available"
         self.contributingSpaceCount = data["numCanContributeTribes"]
         self.twitterProfileUrl = data["twitterProfileUrl"]

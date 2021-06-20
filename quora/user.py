@@ -1,6 +1,3 @@
-import json
-import re
-import asyncio
 import aiohttp
 
 from .profile import Profile
