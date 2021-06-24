@@ -6,9 +6,6 @@
 Welcome to pyquora's documentation!
 ===================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
 
 Installation
 ------------
@@ -16,11 +13,17 @@ Installation
 
 References
 -----------
-Below you can find a reference of all the classes and methods in quora package.
+Below you can find a reference of all the classes and methods in  package.
 
-.. toctree ::
+.. toctree::
+   :maxdepth: 2
+    
    quora
+   quora.exceptions
 
+
+.. contents::
+   :depth: 3
 
 Indices and tables
 ==================
