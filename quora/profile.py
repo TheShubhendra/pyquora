@@ -53,3 +53,8 @@ class Profile:
 
     def __eq__(self, other):
         return vars(self) == vars(other)
+
+    def json(self):
+        self.__dict__.pop("user")
+        return self.__dict__
+
