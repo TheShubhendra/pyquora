@@ -1,4 +1,5 @@
 import aiohttp
+import asyncio
 
 from .profile import Profile
 from ._parsers import (
@@ -40,3 +41,9 @@ class User:
 
     def __eq__(self, other):
         return self.username == other.username
+
+def __del__(self):
+    loop = get_event_loop()
+    task = loop.create_task(self._session.close())
+    loop.run_untill_complete(task)
+
