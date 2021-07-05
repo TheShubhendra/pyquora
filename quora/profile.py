@@ -57,4 +57,3 @@ class Profile:
     def json(self):
         self.__dict__.pop("user")
         return self.__dict__
-
