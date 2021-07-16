@@ -44,7 +44,7 @@ class User:
 
 
 def __del__(self):
-    loop = get_event_loop()
+    loop = asyncio.get_event_loop()
     task = loop.create_task(self._session.close())
     if not loop.is_running():
         loop.run_untill_complete(task)
