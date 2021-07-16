@@ -46,4 +46,5 @@ class User:
 def __del__(self):
     loop = get_event_loop()
     task = loop.create_task(self._session.close())
-    loop.run_untill_complete(task)
+    if not loop.is_running():
+        loop.run_untill_complete(task)
