@@ -16,7 +16,7 @@ def requirements():
 setup(
     name="pyquora",
     packages=find_packages(),
-    version="0.1.1",
+    version="0.2.0",
     license="MIT",
     description="""Fetch profiles and data from Quora.""",
     author="Shubhendra Kushwaha",
