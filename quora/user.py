@@ -5,6 +5,7 @@ from .profile import Profile
 from ._parsers import (
     parse_page,
     parse_answers,
+    parse_topics,
 )
 
 
@@ -38,6 +39,13 @@ class User:
         json_data = parse_page(html_data)
         answers = parse_answers(json_data)
         return answers
+
+    async def knows_about(self):
+        """Fetch expertise topics."""
+        html_data = await self._request(self.profileUrl + "/knows_about")
+        json_data = parse_page(html_data)
+        topics = parse_topics(json_data)
+        return topics
 
     def __eq__(self, other):
         return self.username == other.username

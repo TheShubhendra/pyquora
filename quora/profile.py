@@ -55,5 +55,5 @@ class Profile:
         return vars(self) == vars(other)
 
     def json(self):
-        json =  self.__dict__.copy().pop("user")
+        json = self.__dict__.copy().pop("user")
         return json
