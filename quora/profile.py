@@ -16,6 +16,8 @@ class Profile:
             self.firstName = data["names"][0]["givenName"]
             self.lastName = data["names"][0]["familyName"]
         except Exception:
+            self.firstName = self.username
+            self.lastName = None
             pass
         try:
             self.profileCrendential = data["profileCredential"]["experience"]
