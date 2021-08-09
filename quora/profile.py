@@ -20,7 +20,7 @@ class Profile:
             self.lastName = None
             pass
         try:
-            self.profileCrendential = data["profileCredential"]["experience"]
+            self.profileCrendential = data.get("profileCredential")["experience"]
         except Exception:
             pass
         try:
@@ -41,7 +41,7 @@ class Profile:
         self.answerCount = data["numPublicAnswers"]
         self.questionCount = data["numProfileQuestions"]
         self.shareCount = data["quoraSharesCount"]
-        self.postCount = data["numTribePosts"]
+        self.postCount = data.get("numTribePosts", "N/A")
         self.followingCount = data["followingCount"]
         self.followingSpaceCount = data["numFollowedTribes"]
         self.followingTopicCount = data["numFollowedTopics"]
