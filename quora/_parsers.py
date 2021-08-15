@@ -7,7 +7,7 @@ from quora.topic import Topic
 from .exceptions import ProfileNotFoundError
 
 
-def parse_page(html_data):
+def parse_page(html_data, user):
     """Parse HTML and return JSON."""
     try:
         data = re.findall(
@@ -17,10 +17,11 @@ def parse_page(html_data):
         data = json.loads(json.loads(data))
         return data["data"]["user"]
     except Exception as e:
+        user.logger.debug(data)
+        user.logger.exception("Unable to Parse the profile")
         raise ProfileNotFoundError(
-            "No profile\
-        found with this username."
-            + str(e)
+            f"No profile\
+found with the username {user.username}."
         )
 
 

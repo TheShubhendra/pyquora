@@ -8,7 +8,7 @@ class Topic:
         self.photoUrl = json_data.get("photoUrl")
         self.followerCount = json_data.get("numFollowers")
         self.userAnswersCount = json_data.get("numPublicAnswersOfUser")
-        self.userAnswersUrl = "https://www.quora.com"+json_data.get("userAnswersUrl")
+        self.userAnswersUrl = "https://www.quora.com" + json_data.get("userAnswersUrl")
 
     def __str__(self):
         return self.name

@@ -1,5 +1,6 @@
 import aiohttp
 import asyncio
+import logging
 
 from .profile import Profile
 from ._parsers import (
@@ -12,10 +13,17 @@ from ._parsers import (
 class User:
     """Represents a Quora user."""
 
-    def __init__(self, username, session=None):
+    def __init__(
+        self,
+        username,
+        session=None,
+        logger=logging.getLogger(__name__),
+    ):
         self.username = username
         self.profileUrl = f"https://www.quora.com/profile/{username}"
         self._session = session
+        self.logger = logger
+        self.htmlLogger = logging.getLogger("pyquora-html")
 
     async def _create_session(self) -> None:
         """Creates a aiohttp client session."""
@@ -25,25 +33,27 @@ class User:
         if self._session is None:
             await self._create_session()
         async with self._session.get(url) as response:
-            return await response.text()
+            text = await response.text()
+            self.htmlLogger.debug(text)
+            return text
 
     async def profile(self):
         """Fetch profile of the user."""
         html_data = await self._request(self.profileUrl)
-        json_data = parse_page(html_data)
+        json_data = parse_page(html_data, self)
         return Profile(self, json_data)
 
     async def answers(self):
         """Fetch answers of the User."""
         html_data = await self._request(self.profileUrl + "/answers")
-        json_data = parse_page(html_data)
+        json_data = parse_page(html_data, self)
         answers = parse_answers(json_data)
         return answers
 
     async def knows_about(self):
         """Fetch expertise topics."""
         html_data = await self._request(self.profileUrl + "/knows_about")
-        json_data = parse_page(html_data)
+        json_data = parse_page(html_data, zeld)
         topics = parse_topics(json_data)
         return topics
 
