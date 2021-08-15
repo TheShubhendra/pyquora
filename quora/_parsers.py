@@ -15,13 +15,13 @@ def parse_page(html_data):
             html_data,
         )[-1]
         data = json.loads(json.loads(data))
+        return data["data"]["user"]
     except Exception as e:
         raise ProfileNotFoundError(
-            """No profile/
-        found with this username."""
+            "No profile\
+        found with this username."
             + str(e)
         )
-    return data["data"]["user"]
 
 
 def parse_answers(json_data):
