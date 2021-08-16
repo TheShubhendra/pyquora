@@ -53,7 +53,7 @@ class User:
     async def knows_about(self):
         """Fetch expertise topics."""
         html_data = await self._request(self.profileUrl + "/knows_about")
-        json_data = parse_page(html_data, zeld)
+        json_data = parse_page(html_data, self)
         topics = parse_topics(json_data)
         return topics
 
