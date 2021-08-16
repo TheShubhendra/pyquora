@@ -17,7 +17,6 @@ def parse_page(html_data, user):
         data = json.loads(json.loads(data))
         return data["data"]["user"]
     except Exception as e:
-        user.logger.debug(data)
         user.logger.exception("Unable to Parse the profile")
         raise ProfileNotFoundError(
             f"No profile\
