@@ -1,13 +1,13 @@
 import aiohttp
 import asyncio
 import logging
-
 from .profile import Profile
 from ._parsers import (
     parse_page,
     parse_answers,
     parse_topics,
 )
+from .cache import cache
 
 
 class User:
@@ -18,17 +18,21 @@ class User:
         username,
         session=None,
         logger=logging.getLogger(__name__),
+        cache_manager=None,
     ):
         self.username = username
         self.profileUrl = f"https://www.quora.com/profile/{username}"
         self._session = session
         self.logger = logger
         self.htmlLogger = logging.getLogger("pyquora-html")
+        self._cache = cache_manager
 
+    @cache
     async def _create_session(self) -> None:
         """Creates a aiohttp client session."""
         self._session = aiohttp.ClientSession()
 
+    @cache
     async def _request(self, url) -> str:
         if self._session is None:
             await self._create_session()
@@ -37,12 +41,14 @@ class User:
             self.htmlLogger.debug(text)
             return text
 
+    @cache
     async def profile(self):
         """Fetch profile of the user."""
         html_data = await self._request(self.profileUrl)
         json_data = parse_page(html_data, self)
         return Profile(self, json_data)
 
+    @cache
     async def answers(self):
         """Fetch answers of the User."""
         html_data = await self._request(self.profileUrl + "/answers")
@@ -50,6 +56,7 @@ class User:
         answers = parse_answers(json_data)
         return answers
 
+    @cache
     async def knows_about(self):
         """Fetch expertise topics."""
         html_data = await self._request(self.profileUrl + "/knows_about")
