@@ -14,11 +14,12 @@ def cache(cache_exp=None):
                     return value
             res = await func(user, *args, **kwargs)
             if user._cache is not None:
-                time = user._cache_exp
-                if time is None:
-                    time = cache_exp
-                cache_exp = kwargs.get("cache_exp")
-                if cache_exp is not None:
+                time = 0
+                if kwargs.get("cache_exp"):
+                    time = kwargs.get("cache_exp")
+                elif user._cache_exp:
+                    time = user._cache_exp
+                elif cache_exp:
                     time = cache_exp
                 logger.info(f"Storing cache into {key} will expire in {time} seconds")
                 user._cache.set(key, res, time=time)
