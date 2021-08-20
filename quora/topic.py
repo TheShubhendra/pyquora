@@ -15,14 +15,3 @@ class Topic:
 
     def __eq__(self, other):
         return self.id == other.id
-
-    def __getstate__(self):
-        state = self.__dict__.copy()
-        del state["user"]
-        return state
-
-    def __setstate__(self, state):
-        from .user import User
-
-        self.__dict__.update(state)
-        self.user = User(self.username)

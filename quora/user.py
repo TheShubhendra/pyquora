@@ -27,12 +27,10 @@ class User:
         self.htmlLogger = logging.getLogger("pyquora-html")
         self._cache = cache_manager
 
-    @cache
     async def _create_session(self) -> None:
         """Creates a aiohttp client session."""
         self._session = aiohttp.ClientSession()
 
-    @cache
     async def _request(self, url) -> str:
         if self._session is None:
             await self._create_session()
@@ -53,7 +51,7 @@ class User:
         """Fetch answers of the User."""
         html_data = await self._request(self.profileUrl + "/answers")
         json_data = parse_page(html_data, self)
-        answers = parse_answers(json_data)
+        answers = parse_answers(json_data, self)
         return answers
 
     @cache

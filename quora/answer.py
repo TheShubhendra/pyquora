@@ -4,7 +4,7 @@ from quora.question import Question
 
 
 class Answer:
-    def __init__(self, data_dict):
+    def __init__(self, data_dict, user):
         """Constructs the `Answer` object."""
         self.id = data_dict.get("id")
         self.aid = data_dict.get("aid")
@@ -15,6 +15,7 @@ class Answer:
         self.creationTime = data_dict.get("creationTime")
         self.updatedTime = data_dict.get("updatedTime")
         self.author = data_dict.get("author")
+        self.user = user
 
     def __str__(self):
         """Returns the answer text."""

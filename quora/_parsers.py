@@ -24,10 +24,10 @@ found with the username {user.username}."
         )
 
 
-def parse_answers(json_data):
+def parse_answers(json_data, user):
     """Parse JSON string of answers and return list of `Answer` object."""
     answers = json_data["recentPublicAndPinnedAnswersConnection"]["edges"]
-    return [Answer(ans["node"]) for ans in answers]
+    return [Answer(ans["node"], user) for ans in answers]
 
 
 def parse_topics(json_data):
