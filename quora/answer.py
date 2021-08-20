@@ -23,3 +23,14 @@ class Answer:
     def __eq__(self, other):
         """Returns whether two answers are same or not."""
         return self.aid == other.aid
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state["user"]
+        return state
+
+    def __setstate__(self, state):
+        from .user import User
+
+        self.__dict__.update(state)
+        self.user = User(self.username)
