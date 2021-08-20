@@ -42,14 +42,14 @@ class User:
             return text
 
     @cache(cache_exp=5)
-    async def profile(self):
+    async def profile(self, *args, **kwargs):
         """Fetch profile of the user."""
         html_data = await self._request(self.profileUrl)
         json_data = parse_page(html_data, self)
         return Profile(self, json_data)
 
     @cache(cache_exp=30)
-    async def answers(self):
+    async def answers(self, *args, **kwargs):
         """Fetch answers of the User."""
         html_data = await self._request(self.profileUrl + "/answers")
         json_data = parse_page(html_data, self)
@@ -57,7 +57,7 @@ class User:
         return answers
 
     @cache(cache_exp=3600)
-    async def knows_about(self):
+    async def knows_about(self, *args, **kwargs):
         """Fetch expertise topics."""
         html_data = await self._request(self.profileUrl + "/knows_about")
         json_data = parse_page(html_data, self)
