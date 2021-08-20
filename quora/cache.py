@@ -17,9 +17,13 @@ def cache(cache_exp=None):
                 time = user._cache_exp
                 if time is None:
                     time = cache_exp
+                cache_exp = kwargs.get("cache_exp")
+                if cache_exp is not None:
+                    time = cache_exp
                 logger.info(f"Storing cache into {key} will expire in {time} seconds")
                 user._cache.set(key, res, time=time)
             return res
 
         return _wrapper
+
     return decorator
