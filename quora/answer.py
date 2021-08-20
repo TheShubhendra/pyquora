@@ -16,6 +16,7 @@ class Answer:
         self.updatedTime = data_dict.get("updatedTime")
         self.author = data_dict.get("author")
         self.user = user
+        self.username = self.user.username
 
     def __str__(self):
         """Returns the answer text."""
