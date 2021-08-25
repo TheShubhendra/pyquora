@@ -9,23 +9,24 @@ class Profile:
         """Constructor for Profile."""
         self.user = user
         self.username = user.username
-        self.id = data["id"]
-        self.uid = data["uid"]
-        self.profileImage = data["profileImageUrl"]
+        self.id = data.get("id")
+        self.uid = data.get("uid")
+        self.profileImage = data.get("profileImageUrl")
         try:
             self.firstName = data["names"][0]["givenName"]
+        except Exception:
+            self.firstName = None
+        try:
             self.lastName = data["names"][0]["familyName"]
         except Exception:
-            self.firstName = self.username
             self.lastName = None
-            pass
         try:
-            self.profileCrendential = data.get("profileCredential")["experience"]
+            self.profileCrendential = data["profileCredential"]["experience"]
         except Exception:
-            pass
+            self.profileCrendential = None
         try:
             text = ""
-            description = json.loads(data["description"])
+            description = json.loads(data.get("description"))
             for section in description["sections"]:
                 for span in section["spans"]:
                     text += span["text"]
@@ -33,18 +34,18 @@ class Profile:
             self.profileBio = text
         except Exception:
             self.profileBio = "Not Available"
-        self.contributingSpaceCount = data["numCanContributeTribes"]
-        self.twitterProfileUrl = data["twitterProfileUrl"]
-        self.answerViewsCount = data["allTimePublicAnswerViews"]
-        self.contentViewsCount = data["allTimePublicContentViews"]
-        self.lastMonthContentView = data["lastMonthPublicContentViews"]
-        self.answerCount = data["numPublicAnswers"]
-        self.questionCount = data["numProfileQuestions"]
-        self.shareCount = data["quoraSharesCount"]
+        self.contributingSpaceCount = data.get("numCanContributeTribes")
+        self.twitterProfileUrl = data.get("twitterProfileUrl")
+        self.answerViewsCount = data.get("allTimePublicAnswerViews")
+        self.contentViewsCount = data.get("allTimePublicContentViews")
+        self.lastMonthContentView = data.get("lastMonthPublicContentViews")
+        self.answerCount = data.get("numPublicAnswers")
+        self.questionCount = data.get("numProfileQuestions")
+        self.shareCount = data.get("quoraSharesCount")
         self.postCount = data.get("numTribePosts", "N/A")
-        self.followingCount = data["followingCount"]
-        self.followingSpaceCount = data["numFollowedTribes"]
-        self.followingTopicCount = data["numFollowedTopics"]
+        self.followingCount = data.get("followingCount")
+        self.followingSpaceCount = data.get("numFollowedTribes")
+        self.followingTopicCount = data.get("numFollowedTopics")
         self.followerCount = data["followerCount"]
 
     def __str__(self):
