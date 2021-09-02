@@ -9,6 +9,32 @@ from ._parsers import (
 )
 from .cache import cache
 
+subdomains = {
+    "HI": "हिंदी",
+    "ES": "Español",
+    "FR": "Français",
+    "DE": "Deutsch",
+    "IT": "Italiano",
+    "JA": "日本語",
+    "ID": "Indonesia",
+    "PT": "Português",
+    "NL": "Nederlands",
+    "DA": "Dansk",
+    "FI": "Suomi",
+    "NO": "Norsk",
+    "SV": "Svenska",
+    "MR": "मराठी",
+    "BN": "বাংলা",
+    "TA": "தமிழ்",
+    "AR": "العربية",
+    "HE": "עברית",
+    "GU": "ગુજરાતી",
+    "KN": "ಕನ್ನಡ",
+    "ML": "മലയാളം",
+    "TE": "తెలుగు",
+    "PL": "Polski",
+}
+
 
 class User:
     """Represents a Quora user."""
@@ -20,9 +46,16 @@ class User:
         logger=logging.getLogger(__name__),
         cache_manager=None,
         cache_exp=None,
+        language="en",
     ):
         self.username = username
-        self.profileUrl = f"https://www.quora.com/profile/{username}"
+        if language == "en":
+            self._apiEndPoint = "https://www.quora.com"
+        elif language.upper() in subdomains.keys():
+            self._apiEndPoint = f"https://{language.lower()}.quora.com"
+        else:
+            raise ValueError(f"{language} language is not found.")
+        self.profileUrl = self._apiEndPoint + f"/profile/{username}"
         self._session = session
         self.logger = logger
         self.htmlLogger = logging.getLogger("pyquora-html")
