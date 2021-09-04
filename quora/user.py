@@ -46,21 +46,22 @@ class User:
         logger=logging.getLogger(__name__),
         cache_manager=None,
         cache_exp=None,
-        language="en",
     ):
         self.username = username
-        if language == "en":
-            self._apiEndPoint = "https://www.quora.com"
-        elif language.upper() in subdomains.keys():
-            self._apiEndPoint = f"https://{language.lower()}.quora.com"
-        else:
-            raise ValueError(f"{language} language is not found.")
-        self.profileUrl = self._apiEndPoint + f"/profile/{username}"
         self._session = session
         self.logger = logger
         self.htmlLogger = logging.getLogger("pyquora-html")
         self._cache = cache_manager
         self._cache_exp = cache_exp
+
+    def profileUrl(self, language="en"):
+        if language == "en":
+            apiEndPoint = "https://www.quora.com"
+        elif language.upper() in subdomains.keys():
+            apiEndPoint = f"https://{language.lower()}.quora.com"
+        else:
+            raise ValueError(f"{language} language is not found.")
+        return apiEndPoint + f"/profile/{self.username}"
 
     async def _create_session(self) -> None:
         """Creates a aiohttp client session."""
@@ -77,14 +78,16 @@ class User:
     @cache(cache_exp=5)
     async def profile(self, *args, **kwargs):
         """Fetch profile of the user."""
-        html_data = await self._request(self.profileUrl)
+        lang = kwargs.get("language", "en")
+        html_data = await self._request(self.profileUrl(language=lang))
         json_data = parse_page(html_data, self)
         return Profile(self, json_data)
 
     @cache(cache_exp=30)
     async def answers(self, *args, **kwargs):
         """Fetch answers of the User."""
-        html_data = await self._request(self.profileUrl + "/answers")
+        lang = kwargs.get("language", "en")
+        html_data = await self._request(self.profileUrl(language=lang) + "/answers")
         json_data = parse_page(html_data, self)
         answers = parse_answers(json_data, self)
         return answers
@@ -92,7 +95,8 @@ class User:
     @cache(cache_exp=3600)
     async def knows_about(self, *args, **kwargs):
         """Fetch expertise topics."""
-        html_data = await self._request(self.profileUrl + "/knows_about")
+        lang = kwargs.get("language", "en")
+        html_data = await self._request(self.profileUrl(language=lang) + "/knows_about")
         json_data = parse_page(html_data, self)
         topics = parse_topics(json_data)
         return topics
