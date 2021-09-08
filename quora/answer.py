@@ -4,12 +4,13 @@ from quora.question import Question
 
 
 class Answer:
-    def __init__(self, data_dict, user):
+    def __init__(self, data_dict, user, language="en"):
         """Constructs the `Answer` object."""
         self.id = data_dict.get("id")
         self.aid = data_dict.get("aid")
         self.isPinned = data_dict.get("isPinned")
         self.question = Question(data_dict.get("question"))
+        self.language = language
         self.url = "https://www.quora.com" + data_dict.get("permaUrl")
         self.content = Content(data_dict.get("content"))
         self.creationTime = data_dict.get("creationTime")

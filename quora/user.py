@@ -10,29 +10,30 @@ from ._parsers import (
 from .cache import cache
 
 subdomains = {
-    "HI": "हिंदी",
-    "ES": "Español",
-    "FR": "Français",
-    "DE": "Deutsch",
-    "IT": "Italiano",
-    "JA": "日本語",
-    "ID": "Indonesia",
-    "PT": "Português",
-    "NL": "Nederlands",
-    "DA": "Dansk",
-    "FI": "Suomi",
-    "NO": "Norsk",
-    "SV": "Svenska",
-    "MR": "मराठी",
-    "BN": "বাংলা",
-    "TA": "தமிழ்",
-    "AR": "العربية",
-    "HE": "עברית",
-    "GU": "ગુજરાતી",
-    "KN": "ಕನ್ನಡ",
-    "ML": "മലയാളം",
-    "TE": "తెలుగు",
-    "PL": "Polski",
+    "en": "English",
+    "hi": "हिंदी",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "it": "Italiano",
+    "ja": "日本語",
+    "id": "Indonesia",
+    "pt": "Português",
+    "nl": "Nederlands",
+    "da": "Dansk",
+    "fi": "Suomi",
+    "no": "Norsk",
+    "sv": "Svenska",
+    "mr": "मराठी",
+    "bn": "বাংলা",
+    "ta": "தமிழ்",
+    "ar": "العربية",
+    "he": "עברית",
+    "gu": "ગુજરાતી",
+    "kn": "ಕನ್ನಡ",
+    "ml": "മലയാളം",
+    "te": "తెలుగు",
+    "pl": "Polski",
 }
 
 
@@ -57,7 +58,7 @@ class User:
     def profileUrl(self, language="en"):
         if language == "en":
             apiEndPoint = "https://www.quora.com"
-        elif language.upper() in subdomains.keys():
+        elif language.lower() in subdomains.keys():
             apiEndPoint = f"https://{language.lower()}.quora.com"
         else:
             raise ValueError(f"{language} language is not found.")
@@ -81,7 +82,7 @@ class User:
         lang = kwargs.get("language", "en")
         html_data = await self._request(self.profileUrl(language=lang))
         json_data = parse_page(html_data, self)
-        return Profile(self, json_data)
+        return Profile(self, json_data, lang)
 
     @cache(cache_exp=30)
     async def answers(self, *args, **kwargs):
@@ -89,7 +90,7 @@ class User:
         lang = kwargs.get("language", "en")
         html_data = await self._request(self.profileUrl(language=lang) + "/answers")
         json_data = parse_page(html_data, self)
-        answers = parse_answers(json_data, self)
+        answers = parse_answers(json_data, self, lang)
         return answers
 
     @cache(cache_exp=3600)
@@ -98,7 +99,7 @@ class User:
         lang = kwargs.get("language", "en")
         html_data = await self._request(self.profileUrl(language=lang) + "/knows_about")
         json_data = parse_page(html_data, self)
-        topics = parse_topics(json_data)
+        topics = parse_topics(json_data, lang)
         return topics
 
     def __eq__(self, other):

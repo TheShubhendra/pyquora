@@ -5,12 +5,13 @@ import json
 class Profile:
     """Represent the profile of a quora user."""
 
-    def __init__(self, user, data):
+    def __init__(self, user, data, language="en"):
         """Constructor for Profile."""
         self.user = user
         self.username = user.username
         self.id = data.get("id")
         self.uid = data.get("uid")
+        self.language = language
         self.profileImage = data.get("profileImageUrl")
         try:
             self.firstName = data["names"][0]["givenName"]
