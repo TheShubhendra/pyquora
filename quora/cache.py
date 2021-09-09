@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 def cache(cache_exp=None):
     def decorator(func):
         async def _wrapper(user, *args, **kwargs):
-            key = f"pyquora_{func.__name__}_{user.username}"
+            key = f"pyquora_{func.__name__}_{user.username}_{kwargs.get('language','en')"
             if user._cache is not None:
                 value = user._cache.get(key)
                 if value is not None:
@@ -21,6 +21,8 @@ def cache(cache_exp=None):
                     time = user._cache_exp
                 elif cache_exp:
                     time = cache_exp
+                if not isinstance(time, int):
+                    raise TypeError(f"cache expiry time should be in int. I got {time} instead.")
                 logger.info(f"Storing cache into {key} will expire in {time} seconds")
                 user._cache.set(key, res, time=time)
             return res
