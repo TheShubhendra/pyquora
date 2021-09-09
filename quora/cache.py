@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 def cache(cache_exp=None):
     def decorator(func):
         async def _wrapper(user, *args, **kwargs):
-            key = f"pyquora_{func.__name__}_{user.username}_{kwargs.get('language','en')"
+            key = f"pyquora_{func.__name__}_{user.username}_{kwargs.get('language','en')}"
             if user._cache is not None:
                 value = user._cache.get(key)
                 if value is not None:
