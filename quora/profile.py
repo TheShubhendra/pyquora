@@ -1,9 +1,7 @@
 """Contains Profile class."""
 import json
-from dataclasses import dataclass
 
 
-@dataclass
 class Profile:
     """Represent the profile of a quora user."""
 
