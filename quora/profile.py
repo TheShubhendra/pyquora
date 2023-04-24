@@ -26,13 +26,15 @@ class Profile:
         except Exception:
             self.profileCrendential = None
         try:
-            text = ""
-            description = json.loads(data.get("description"))
-            for section in description["sections"]:
-                for span in section["spans"]:
-                    text += span["text"]
-                text += "\n"
-            self.profileBio = text
+            description = json.loads(
+                data['descriptionQtextDocument']['legacyJson'])
+            description = description['sections']
+            bio = ''
+            for i in range(len(description)):
+                for key in description[i]['spans']:
+                    bio += key['text'] + '\n'
+            self.profileBio = bio
+
         except Exception:
             self.profileBio = "Not Available"
         self.contributingSpaceCount = data.get("numCanContributeTribes")

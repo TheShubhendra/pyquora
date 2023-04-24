@@ -6,19 +6,18 @@ from quora.answer import Answer
 from quora.topic import Topic
 from .exceptions import ProfileNotFoundError
 
-# noqa: E501
+
 def parse_page(html_data, user):
     """Parse HTML and return JSON."""
     try:
         data = re.search(
             r'window\.ansFrontendGlobals\.data\.inlineQueryResults\.results\[".*\]\.push\((?P<extracted_data>\".*\")\);',
             html_data,
-        )
+        )  # noqa: E501
         data = data.group('extracted_data')
         data = json.loads(json.loads(data))
         return data["data"]["user"]
     except Exception as e:
-        # user.logger.warn("Unable to Parse the profile")
         raise ProfileNotFoundError(
             f"No profile\
 found with the username {user.username}."
