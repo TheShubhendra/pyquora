@@ -105,9 +105,8 @@ class User:
     def __eq__(self, other):
         return self.username == other.username
 
-
-def __del__(self):
-    loop = asyncio.get_event_loop()
-    task = loop.create_task(self._session.close())
-    if not loop.is_running():
-        loop.run_untill_complete(task)
+    def __del__(self):
+        loop = asyncio.get_event_loop()
+        task = loop.create_task(self._session.close())
+        if not loop.is_running():
+            loop.run_untill_complete(task)
