@@ -45,10 +45,11 @@ class Profile:
         self.answerCount = data.get("numPublicAnswers")
         self.questionCount = data.get("numProfileQuestions")
         self.shareCount = data.get("quoraSharesCount")
-        self.postCount = data.get("numTribePosts", "N/A")
+        self.postCount = data.get("postsCount", "N/A")
         self.followingCount = data.get("followingCount")
-        self.followingSpaceCount = data.get("numFollowedTribes")
-        self.followingTopicCount = data.get("numFollowedTopics")
+        self.followingSpaceCount = len(data.get("followingTribesConnection"))
+        self.followingTopicCount = len(data.get(
+            "expertiseTopicsConnection")['edges'])
         self.followerCount = data["followerCount"]
 
     def __str__(self):
